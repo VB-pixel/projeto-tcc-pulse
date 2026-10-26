@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import rateLimit from 'express-rate-limit';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import authRoutes from './routes/auth.js';
 import dataRoutes from './routes/data.js';
@@ -10,6 +11,18 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Proteção contra Força Bruta (Máximo de 100 requisições a cada 15 min por IP)
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, 
+  max: 100, 
+  message: { error: 'Muitas requisições. Tente novamente mais tarde.' }
+});
+app.use(limiter);
+
+// Configuração de CORS mais segura
+app.use(cors({ origin: 'http://127.0.0.1:5500' })); // Coloque a URL do seu front-end (Live Server)
+app.use(express.json());
 
 // ─── Middlewares ───
 app.use(cors());

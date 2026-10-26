@@ -18,6 +18,7 @@ db.exec(`
     email TEXT UNIQUE NOT NULL,
     password TEXT NOT NULL,
     course TEXT,
+    role TEXT DEFAULT 'aluno', -- 'aluno' ou 'professor'
     createdAt TEXT DEFAULT CURRENT_TIMESTAMP
   );
 
@@ -65,6 +66,13 @@ db.exec(`
     date TEXT NOT NULL,
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
   );
+
+  -- MELHORIA: Criando índices para buscas mais rápidas
+  CREATE INDEX IF NOT EXISTS idx_moods_user ON moods(user_id);
+  CREATE INDEX IF NOT EXISTS idx_exercises_user ON exercises(user_id);
+  CREATE INDEX IF NOT EXISTS idx_gratitude_user ON gratitude(user_id);
+  CREATE INDEX IF NOT EXISTS idx_water_user ON water(user_id);
+  CREATE INDEX IF NOT EXISTS idx_pomodoro_user ON pomodoro(user_id);
 `);
 
 console.log('🗄️ Banco de dados SQLite conectado com sucesso!');

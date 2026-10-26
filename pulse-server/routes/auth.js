@@ -1,10 +1,11 @@
+import 'dotenv/config';
 import express from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import db from '../database.js';
 
 const router = express.Router();
-const JWT_SECRET = process.env.JWT_SECRET || 'chave_secreta_pulse_tcc';
+const JWT_SECRET = process.env.JWT_SECRET || 'pulse_tcc_secret_key';
 
 // ─── Rota de REGISTRO ───
 router.post('/register', async (req, res) => {

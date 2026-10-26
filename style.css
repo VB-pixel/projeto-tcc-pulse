@@ -81,6 +81,7 @@
      --coral-escuro: #F43F5E;
      --lavanda-claro: #263244;
      --lavanda: #334155;
+     --lavanda-medio: #475569;  
      --menta: #1E3A34;
      --menta-suave: #0F172A;
    }
@@ -2742,4 +2743,45 @@ body[data-theme="dark"] .feature-card:hover {
 /* Ícone + título dos cards ganham destaque no dark */
 body[data-theme="dark"] .feature-card .feature-icon {
   filter: drop-shadow(0 0 12px rgba(94, 234, 212, 0.15));
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   28. CORREÇÃO DE AUTOFILL (Navegador preenchendo senhas)
+   ═══════════════════════════════════════════════════════════════ */
+   input:-webkit-autofill,
+   input:-webkit-autofill:hover, 
+   input:-webkit-autofill:focus, 
+   input:-webkit-autofill:active {
+     -webkit-box-shadow: 0 0 0 30px var(--lavanda-claro) inset !important;
+     -webkit-text-fill-color: var(--texto) !important;
+     transition: background-color 5000s ease-in-out 0s;
+   }
+
+   /* ─── Botão de apagar registro (Histórico de Humor) ─── */
+.btn-delete-mood {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  opacity: 0.5; /* Meio transparente por padrão */
+  transition: all 0.2s ease;
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-delete-mood:hover {
+  opacity: 1;
+  background: rgba(220, 38, 38, 0.1); /* Vermelho bem de leve no fundo */
+  transform: scale(1.15); /* Aumenta um pouquinho quando passa o mouse */
+}
+
+body[data-theme="dark"] .btn-delete-mood:hover {
+  background: rgba(220, 38, 38, 0.2); /* Ajuste para o modo escuro */
+}
+.btn-delete-mood:focus {
+  outline: none;
+  border: none;
 }
