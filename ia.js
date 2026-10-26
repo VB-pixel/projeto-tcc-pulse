@@ -2,8 +2,6 @@
 // heart.ia — Integração com o Backend (Node.js)
 // ═══════════════════════════════════════════════════════════
 
-// URL do nosso servidor Node.js
-const API_URL = 'http://localhost:3000';
 
 function appendMsg(text, who = 'user') {
   const chat = document.getElementById('iaChat');
@@ -29,9 +27,7 @@ function removeTyping() {
   document.getElementById('iaTyping')?.remove();
 }
 
-async function sendIAMessage(e) {
-  if (e) e.preventDefault();
-  
+async function sendIAMessage() {
   const input = document.getElementById('iaInput');
   const msg = input.value.trim();
   if (!msg) return;
@@ -42,23 +38,18 @@ async function sendIAMessage(e) {
   showTyping();
 
   try {
-    // Faz a chamada para o nosso backend
     const response = await fetch(`${API_URL}/api/chat`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: msg })
     });
 
     if (!response.ok) {
-  const errData = await response.json();
-  throw new Error(errData.error || 'Erro na resposta do servidor');
-}
+      const errData = await response.json();
+      throw new Error(errData.error || 'Erro na resposta do servidor');
+    }
 
     const data = await response.json();
-    
-    // Remove os pontinhos de "digitando" e mostra a resposta real
     removeTyping();
     appendMsg(data.reply, 'bot');
 
@@ -73,3 +64,14 @@ function quickAsk(text) {
   document.getElementById('iaInput').value = text;
   sendIAMessage();
 }
+
+// Bloqueia o recarregamento da página ao enviar o formulário
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('iaForm');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault(); // <--- É isso que impede o recarregamento
+      sendIAMessage();
+    });
+  }
+});

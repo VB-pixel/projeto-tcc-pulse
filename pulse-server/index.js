@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import authRoutes from './routes/auth.js';
+import dataRoutes from './routes/data.js';
 
 // Carrega as variáveis de ambiente
 dotenv.config();
@@ -17,6 +18,7 @@ app.use(express.json({ limit: '10kb' }));
 // ─── Rotas de Autenticação (Login e Registro) ───
 // Tudo que estiver em routes/auth.js vai responder em /api/auth/...
 app.use('/api/auth', authRoutes);
+app.use('/api/data', dataRoutes);
 
 // ─── Rota de Teste (Health Check) ───
 app.get('/api/health', (req, res) => {

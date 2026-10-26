@@ -3,3 +3,6 @@ pulse-server/node_modules/
 pulse-server/data/db.json
 .env
 .DS_Store
+# Variáveis de ambiente
+.env
+pulse-server/.env

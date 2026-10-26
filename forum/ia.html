@@ -208,10 +208,17 @@
             <button class="ia-chip" onclick="quickAsk('Dicas de alimentação para estudar')">🥗 Alimentação</button>
           </div>
 
-          <form class="ia-input-wrap" onsubmit="sendIAMessage(event)">
-            <input type="text" id="iaInput" placeholder="Escreva sua mensagem..." autocomplete="off" maxlength="1000">
-            <button type="submit" class="ia-send" aria-label="Enviar">➤</button>
-          </form>
+        <div class="ia-input-wrap">
+  <input 
+    type="text" 
+    id="iaInput" 
+    placeholder="Escreva sua mensagem..." 
+    autocomplete="off" 
+    maxlength="1000"
+    onkeypress="if(event.key === 'Enter') { event.preventDefault(); sendIAMessage(); }"
+  >
+  <button type="button" class="ia-send" aria-label="Enviar" onclick="sendIAMessage()">➤</button>
+</div>
         </div>
 
         <p class="ia-disclaimer">
