@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fórum | P.U.L.S.E</title>
+  <meta name="description" content="Fórum verificado com profissionais de saúde para apoio ao bem-estar estudantil." />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <a class="brand-link" href="index.html">P.U.L.S.E</a>
+      <nav aria-label="Navegação Principal">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Humor <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="humor.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="humor/monitoramento.html" class="dropdown-link">Monitoramento</a></li>
+              <li><a href="humor/sono.html" class="dropdown-link">Sono</a></li>
+              <li><a href="humor/emocoes.html" class="dropdown-link">Emoções</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Autocuidado <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="autocuidado.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="autocuidado/estudos.html" class="dropdown-link">Estudos</a></li>
+              <li><a href="autocuidado/gratidao.html" class="dropdown-link">Gratidão</a></li>
+              <li><a href="autocuidado/relaxamento.html" class="dropdown-link">Relaxamento</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Rotina <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="rotina.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="rotina/calendario.html" class="dropdown-link">Calendário</a></li>
+              <li><a href="rotina/exercicios.html" class="dropdown-link">Exercícios</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link active">Fórum <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="forum.html" class="dropdown-link active">Ver tudo</a></li>
+              <li><a href="forum/comunidade.html" class="dropdown-link">Comunidade</a></li>
+              <li><a href="forum/sugestoes.html" class="dropdown-link">Sugestões</a></li>
+              <li><a href="forum/ia.html" class="dropdown-link">heart.ia</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Nutrição <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="nutricao.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="nutricao/imc.html" class="dropdown-link">Calculadora IMC</a></li>
+              <li><a href="nutricao/tmb.html" class="dropdown-link">Calculadora TMB</a></li>
+              <li><a href="nutricao/agua.html" class="dropdown-link">Hidratação</a></li>
+              <li><a href="nutricao/calorias.html" class="dropdown-link">Calorias</a></li>
+              <li><a href="nutricao/macros.html" class="dropdown-link">Macronutrientes</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="user-menu" id="userMenu">
+      <button class="user-avatar" id="userAvatar" onclick="toggleUserDropdown()">
+        <span id="avatarIcon">👤</span>
+        <span class="user-status" id="userStatus"></span>
+      </button>
+      <div class="user-dropdown" id="userDropdown">
+        <div class="dropdown-section" id="dropdownLoggedOut">
+          <div class="dropdown-greeting">👋 Olá, visitante!</div>
+          <button class="dropdown-btn btn-primary" onclick="openAuthModal('login')">Entrar</button>
+          <button class="dropdown-btn btn-secondary" onclick="openAuthModal('register')">Criar conta</button>
+        </div>
+        <div class="dropdown-section" id="dropdownLoggedIn" style="display:none;">
+          <div class="dropdown-user-info">
+            <div class="dropdown-avatar-large" id="dropdownAvatar">👤</div>
+            <div class="dropdown-user-details">
+              <div class="dropdown-user-name" id="dropdownUserName">Usuário</div>
+              <div class="dropdown-user-email" id="dropdownUserEmail">email@email.com</div>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-stats">
+            <div class="dropdown-stat"><span class="stat-icon">😊</span><span class="stat-value" id="dropdownMoodCount">0</span><span class="stat-label">humores</span></div>
+            <div class="dropdown-stat"><span class="stat-icon">💧</span><span class="stat-value" id="dropdownWaterCount">0</span><span class="stat-label">copos</span></div>
+            <div class="dropdown-stat"><span class="stat-icon">🍅</span><span class="stat-value" id="dropdownPomodoroCount">0</span><span class="stat-label">sessões</span></div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-btn btn-danger" onclick="handleLogout()">🚪 Sair da conta</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="theme-selector" id="themeSelector">
+      <button class="theme-btn" onclick="toggleThemeMenu(event)" aria-label="Selecionar tema">
+        <span class="theme-icon" id="currentThemeIcon">💻</span>
+      </button>
+      <div class="theme-menu">
+        <button class="theme-option" data-theme="system" onclick="setTheme('system')">
+          <span class="theme-option-icon">💻</span>
+          <div class="theme-option-text"><strong>Modo do Sistema</strong><span>Acompanha seu dispositivo</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+        <button class="theme-option" data-theme="light" onclick="setTheme('light')">
+          <span class="theme-option-icon">☀️</span>
+          <div class="theme-option-text"><strong>Modo Claro</strong><span>Sempre claro</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+        <button class="theme-option" data-theme="dark" onclick="setTheme('dark')">
+          <span class="theme-option-icon">🌙</span>
+          <div class="theme-option-text"><strong>Modo Escuro</strong><span>Sempre escuro</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="auth-modal-overlay" id="authModal">
+    <div class="auth-modal">
+      <button class="auth-modal-close" onclick="closeAuthModal()">✕</button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login" onclick="switchModalTab('login')">Entrar</button>
+        <button class="auth-tab" data-tab="register" onclick="switchModalTab('register')">Criar Conta</button>
+      </div>
+      <div class="auth-panel active" id="modalLoginPanel">
+        <h3>Bem-vindo de volta! 👋</h3>
+        <p>Entre para acompanhar seu progresso</p>
+        <form id="modalLoginForm" onsubmit="handleModalLogin(event)">
+          <div class="form-group"><label for="modalLoginEmail">E-mail</label><input type="email" id="modalLoginEmail" placeholder="seu@email.com" required></div>
+          <div class="form-group"><label for="modalLoginPassword">Senha</label><input type="password" id="modalLoginPassword" placeholder="••••••••" required></div>
+          <button type="submit" class="btn" style="width:100%;justify-content:center;">Entrar</button>
+        </form>
+        <p style="text-align:center;font-size:0.85rem;margin-top:16px;color:var(--texto-suave);">Ainda não tem conta? <a href="#" onclick="switchModalTab('register');return false;">Criar agora</a></p>
+      </div>
+      <div class="auth-panel" id="modalRegisterPanel">
+        <h3>Crie sua conta 🎉</h3>
+        <p>Junte-se à comunidade P.U.L.S.E</p>
+        <form id="modalRegisterForm" onsubmit="handleModalRegister(event)">
+          <div class="form-group"><label for="modalRegName">Nome completo</label><input type="text" id="modalRegName" placeholder="Seu nome" required></div>
+          <div class="form-group"><label for="modalRegEmail">E-mail</label><input type="email" id="modalRegEmail" placeholder="seu@email.com" required></div>
+          <div class="form-group"><label for="modalRegPassword">Senha</label><input type="password" id="modalRegPassword" placeholder="Mínimo 6 caracteres" minlength="6" required></div>
+          <div class="form-group"><label for="modalRegCourse">Curso (opcional)</label><input type="text" id="modalRegCourse" placeholder="Ex: Psicologia"></div>
+          <button type="submit" class="btn" style="width:100%;justify-content:center;background:var(--menta-vibrante);">Criar conta</button>
+        </form>
+        <p style="text-align:center;font-size:0.85rem;margin-top:16px;color:var(--texto-suave);">Já tem conta? <a href="#" onclick="switchModalTab('login');return false;">Fazer login</a></p>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="container">
+      <section class="section">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px;">
+          <div>
+            <h2 class="section-title">🩺 Fórum de Saúde Verificado</h2>
+            <p class="section-sub" style="margin-bottom:0;">Conteúdo revisado por profissionais da saúde. Sem mitos, só fatos.</p>
+          </div>
+          <button class="btn" id="openNewPost">+ Nova pergunta</button>
+        </div>
+
+        <div style="background:var(--menta);border-radius:16px;padding:16px 20px;margin-bottom:28px;display:flex;gap:12px;align-items:center;">
+          <span style="font-size:1.4rem;">✅</span>
+          <p style="font-size:0.88rem;color:var(--texto);margin:0;">
+            <strong>Como funciona:</strong> Perguntas dos estudantes são respondidas por médicos, nutricionistas, psicólogos e enfermeiros voluntários. Posts verificados recebem o selo <span class="verified-badge">✓ Verificado</span>.
+          </p>
+        </div>
+
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;">
+          <button class="nutri-tab active" data-filter="all">Todos</button>
+          <button class="nutri-tab" data-filter="mental">🧠 Saúde Mental</button>
+          <button class="nutri-tab" data-filter="fisica">💪 Saúde Física</button>
+          <button class="nutri-tab" data-filter="nutri">🥗 Nutrição</button>
+          <button class="nutri-tab" data-filter="sono">😴 Sono</button>
+        </div>
+
+        <div id="forumPosts">
+          <div class="forum-post" data-category="mental">
+            <div class="post-header">
+              <div class="post-avatar">MA</div>
+              <div class="post-meta">
+                <div class="post-author">Dr. Marcos Alves <span class="verified-badge">✓ Psicólogo CRP</span></div>
+                <div class="post-date">Há 2 horas</div>
+              </div>
+            </div>
+            <p class="post-body"><strong>Ansiedade antes de provas é normal?</strong><br><br>
+              Sim, é completamente normal! A ansiedade pré-prova é uma resposta fisiológica natural — o corpo libera adrenalina para nos deixar mais alertas. O problema é quando ela se torna paralisante. Técnicas eficazes incluem: respiração diafragmática (4-7-8), revisão do material com antecedência para reduzir a incerteza, e reestruturação cognitiva (questionar pensamentos catastróficos). Se a ansiedade persistir e prejudicar seu desempenho, considere apoio psicológico.</p>
+            <div class="post-tags">
+              <span class="post-tag">🧠 Saúde Mental</span>
+              <span class="post-tag">📚 Provas</span>
+              <span class="post-tag">✓ Verificado</span>
+            </div>
+            <div class="post-actions">
+              <button class="post-action-btn" onclick="likePost(this)">👍 <span>47</span></button>
+              <button class="post-action-btn">💬 <span>12</span> comentários</button>
+              <button class="post-action-btn">🔖 Salvar</button>
+            </div>
+          </div>
+
+          <div class="forum-post" data-category="sono">
+            <div class="post-header">
+              <div class="post-avatar">LF</div>
+              <div class="post-meta">
+                <div class="post-author">Dra. Luana Ferreira <span class="verified-badge">✓ Neurologista</span></div>
+                <div class="post-date">Há 5 horas</div>
+              </div>
+            </div>
+            <p class="post-body"><strong>Estudar de madrugada prejudica o aprendizado?</strong><br><br>
+              Sim, de forma significativa! Durante o sono, especialmente nas fases REM, o cérebro consolida as memórias — transfere informações da memória de curto prazo para a de longo prazo. Estudar privando-se de sono significa que você aprende o conteúdo, mas não o fixa adequadamente. Um estudo da Universidade de Harvard mostrou que dormir após estudar melhora a retenção em até 44%. Priorize 7-9 horas de sono, mesmo em época de provas.</p>
+            <div class="post-tags">
+              <span class="post-tag">😴 Sono</span>
+              <span class="post-tag">🧠 Memória</span>
+              <span class="post-tag">✓ Verificado</span>
+            </div>
+            <div class="post-actions">
+              <button class="post-action-btn" onclick="likePost(this)">👍 <span>83</span></button>
+              <button class="post-action-btn">💬 <span>25</span> comentários</button>
+              <button class="post-action-btn">🔖 Salvar</button>
+            </div>
+          </div>
+
+          <div class="forum-post" data-category="nutri">
+            <div class="post-header">
+              <div class="post-avatar">RS</div>
+              <div class="post-meta">
+                <div class="post-author">Nutri. Renata Santos <span class="verified-badge">✓ Nutricionista CRN</span></div>
+                <div class="post-date">Há 1 dia</div>
+              </div>
+            </div>
+            <p class="post-body"><strong>Qual o melhor café da manhã para estudar?</strong><br><br>
+              O café da manhã ideal para o desempenho cognitivo combina carboidratos complexos (aveia, pão integral) para energia sustentada, proteínas (ovos, iogurte) para saciedade e neurotransmissores, e gorduras boas (abacate, oleaginosas) para a saúde cerebral. Evite açúcar em excesso, que causa picos e quedas de energia. Um exemplo prático e econômico: mingau de aveia com banana e uma pitada de canela + ovo mexido.</p>
+            <div class="post-tags">
+              <span class="post-tag">🥗 Nutrição</span>
+              <span class="post-tag">☀️ Café da manhã</span>
+              <span class="post-tag">✓ Verificado</span>
+            </div>
+            <div class="post-actions">
+              <button class="post-action-btn" onclick="likePost(this)">👍 <span>61</span></button>
+              <button class="post-action-btn">💬 <span>18</span> comentários</button>
+              <button class="post-action-btn">🔖 Salvar</button>
+            </div>
+          </div>
+
+          <div class="forum-post" data-category="fisica">
+            <div class="post-header">
+              <div class="post-avatar">JP</div>
+              <div class="post-meta">
+                <div class="post-author">Dr. João Pinto <span class="verified-badge">✓ Fisioterapeuta CREFITO</span></div>
+                <div class="post-date">Há 2 dias</div>
+              </div>
+            </div>
+            <p class="post-body"><strong>Dor nas costas de estudar sentado o dia todo?</strong><br><br>
+              Muito comum! A postura estática prolongada sobrecarrega a coluna. Dicas essenciais: use a regra 20-20-20 (a cada 20 minutos, levante-se por 20 segundos e olhe 20 metros ao longe). Ajuste a cadeira para que os joelhos fiquem em 90°, os pés apoiados no chão e o monitor na altura dos olhos. Alongamentos simples: girar o pescoço suavemente, encolher e soltar os ombros, e dobrar o tronco para frente devagar. 5 minutos de alongamento a cada 2h de estudo fazem grande diferença.</p>
+            <div class="post-tags">
+              <span class="post-tag">💪 Saúde Física</span>
+              <span class="post-tag">🪑 Postura</span>
+              <span class="post-tag">✓ Verificado</span>
+            </div>
+            <div class="post-actions">
+              <button class="post-action-btn" onclick="likePost(this)">👍 <span>39</span></button>
+              <button class="post-action-btn">💬 <span>8</span> comentários</button>
+              <button class="post-action-btn">🔖 Salvar</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="newPostModal">
+    <div class="modal">
+      <button class="modal-close" id="closeModal">✕</button>
+      <h3>💬 Fazer uma pergunta</h3>
+      <p>Sua pergunta será enviada para revisão por um profissional de saúde voluntário.</p>
+      <input type="text" id="postTitle" placeholder="Título da sua pergunta..." style="width:100%;margin-bottom:12px;font-size:0.9rem;">
+      <textarea id="postBody" rows="4" placeholder="Descreva sua dúvida com mais detalhes..." style="width:100%;font-family:inherit;font-size:0.88rem;border:1px solid var(--borda);border-radius:12px;padding:12px;resize:none;background:var(--lavanda-claro);"></textarea>
+      <select id="postCategory" style="width:100%;margin-top:10px;font-size:0.88rem;">
+        <option value="">Selecione a categoria...</option>
+        <option value="mental">🧠 Saúde Mental</option>
+        <option value="fisica">💪 Saúde Física</option>
+        <option value="nutri">🥗 Nutrição</option>
+        <option value="sono">😴 Sono</option>
+      </select>
+      <div style="margin-top:16px;display:flex;gap:10px;">
+        <button class="btn" id="submitPost">Enviar pergunta</button>
+        <button class="btn btn-outline" id="cancelPost">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <h3 class="brand-title">P.U.L.S.E<span>.</span></h3>
+        <p class="copyright-text">&copy; 2026 Todos os direitos reservados.</p>
+      </div>
+      <div class="footer-middle">
+        <div class="info-block"><h4>Dias Úteis</h4><p class="info-content">📅 Segunda a Sexta: 09h às 18h</p></div>
+        <div class="info-block"><h4>Finais de Semana</h4><p class="info-content">🕐 Sábado: 09h às 13h</p></div>
+        <div class="info-block"><h4>Canais de Suporte</h4><p class="info-content">✉️ <a href="mailto:pulsestudantil@gmail.com" class="link-email">pulsestudantil@gmail.com</a></p></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="disclaimer-title"><strong>ℹ️ Aviso de Projeto Acadêmico</strong></div>
+        <p class="disclaimer-text">Este ambiente digital é um protótipo construído para fins de avaliação acadêmica. Os textos e recomendações de bem-estar servem apenas como massa de dados para testes de usabilidade e interface, não devendo ser utilizados como guia de saúde real. Para orientações médicas, consulte um profissional habilitado.</p>
+        <div class="disclaimer-ai">
+          <strong>🤖 Sobre a heart.ia</strong>
+          <p>A assistente virtual heart.ia é uma ferramenta de apoio informativo e <strong>não substitui, em nenhuma hipótese, o atendimento de profissionais de saúde habilitados</strong>. O uso das informações é de <strong>responsabilidade exclusiva do usuário</strong>. Em caso de crise, ligue <strong>CVV: 188</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>

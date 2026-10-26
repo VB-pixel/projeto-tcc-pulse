@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de TMB | P.U.L.S.E</title>
+  <meta name="description" content="Calcule sua Taxa Metabólica Basal (TMB) online.">
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="manifest" href="../site.webmanifest">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <header>
+    <div class="container">
+      <a class="brand-link" href="../index.html">P.U.L.S.E</a>
+      <nav aria-label="Navegação Principal">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Humor <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="humor.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="humor/monitoramento.html" class="dropdown-link">Monitoramento</a></li>
+              <li><a href="humor/sono.html" class="dropdown-link">Sono</a></li>
+              <li><a href="humor/emocoes.html" class="dropdown-link">Emoções</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Autocuidado <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="autocuidado.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="autocuidado/estudos.html" class="dropdown-link">Estudos</a></li>
+              <li><a href="autocuidado/gratidao.html" class="dropdown-link">Gratidão</a></li>
+              <li><a href="autocuidado/relaxamento.html" class="dropdown-link">Relaxamento</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Rotina <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="rotina.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="rotina/calendario.html" class="dropdown-link">Calendário</a></li>
+              <li><a href="rotina/exercicios.html" class="dropdown-link">Exercícios</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Fórum <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="forum.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="forum/comunidade.html" class="dropdown-link">Comunidade</a></li>
+              <li><a href="forum/sugestoes.html" class="dropdown-link">Sugestões</a></li>
+              <li><a href="forum/ia.html" class="dropdown-link">heart.ia</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link active">Nutrição <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="nutricao.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="imc.html" class="dropdown-link">Calculadora IMC</a></li>
+              <li><a href="tmb.html" class="dropdown-link active">Calculadora TMB</a></li>
+              <li><a href="agua.html" class="dropdown-link">Hidratação</a></li>
+              <li><a href="calorias.html" class="dropdown-link">Calorias</a></li>
+              <li><a href="macros.html" class="dropdown-link">Macronutrientes</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="user-menu" id="userMenu">
+      <button class="user-avatar" id="userAvatar" onclick="toggleUserDropdown()">
+        <span id="avatarIcon">👤</span>
+        <span class="user-status" id="userStatus"></span>
+      </button>
+      <div class="user-dropdown" id="userDropdown">
+        <div class="dropdown-section" id="dropdownLoggedOut">
+          <div class="dropdown-greeting">👋 Olá, visitante!</div>
+          <button class="dropdown-btn btn-primary" onclick="openAuthModal('login')">Entrar</button>
+          <button class="dropdown-btn btn-secondary" onclick="openAuthModal('register')">Criar conta</button>
+        </div>
+        <div class="dropdown-section" id="dropdownLoggedIn" style="display:none;">
+          <div class="dropdown-user-info">
+            <div class="dropdown-avatar-large" id="dropdownAvatar">👤</div>
+            <div class="dropdown-user-details">
+              <div class="dropdown-user-name" id="dropdownUserName">Usuário</div>
+              <div class="dropdown-user-email" id="dropdownUserEmail">email@email.com</div>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-stats">
+            <div class="dropdown-stat"><span class="stat-icon">😊</span><span class="stat-value" id="dropdownMoodCount">0</span><span class="stat-label">humores</span></div>
+            <div class="dropdown-stat"><span class="stat-icon">💧</span><span class="stat-value" id="dropdownWaterCount">0</span><span class="stat-label">copos</span></div>
+            <div class="dropdown-stat"><span class="stat-icon">🍅</span><span class="stat-value" id="dropdownPomodoroCount">0</span><span class="stat-label">sessões</span></div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-btn btn-danger" onclick="handleLogout()">🚪 Sair da conta</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="theme-selector" id="themeSelector">
+      <button class="theme-btn" onclick="toggleThemeMenu(event)" aria-label="Selecionar tema">
+        <span class="theme-icon" id="currentThemeIcon">💻</span>
+      </button>
+      <div class="theme-menu">
+        <button class="theme-option" data-theme="system" onclick="setTheme('system')">
+          <span class="theme-option-icon">💻</span>
+          <div class="theme-option-text"><strong>Modo do Sistema</strong><span>Acompanha seu dispositivo</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+        <button class="theme-option" data-theme="light" onclick="setTheme('light')">
+          <span class="theme-option-icon">☀️</span>
+          <div class="theme-option-text"><strong>Modo Claro</strong><span>Sempre claro</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+        <button class="theme-option" data-theme="dark" onclick="setTheme('dark')">
+          <span class="theme-option-icon">🌙</span>
+          <div class="theme-option-text"><strong>Modo Escuro</strong><span>Sempre escuro</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="auth-modal-overlay" id="authModal">
+    <div class="auth-modal">
+      <button class="auth-modal-close" onclick="closeAuthModal()">✕</button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login" onclick="switchModalTab('login')">Entrar</button>
+        <button class="auth-tab" data-tab="register" onclick="switchModalTab('register')">Criar Conta</button>
+      </div>
+      <div class="auth-panel active" id="modalLoginPanel">
+        <h3>Bem-vindo de volta! 👋</h3>
+        <p>Entre para acompanhar seu progresso</p>
+        <form id="modalLoginForm" onsubmit="handleModalLogin(event)">
+          <div class="form-group"><label for="modalLoginEmail">E-mail</label><input type="email" id="modalLoginEmail" placeholder="seu@email.com" required></div>
+          <div class="form-group"><label for="modalLoginPassword">Senha</label><input type="password" id="modalLoginPassword" placeholder="••••••••" required></div>
+          <button type="submit" class="btn" style="width:100%;justify-content:center;">Entrar</button>
+        </form>
+        <p style="text-align:center;font-size:0.85rem;margin-top:16px;color:var(--texto-suave);">Ainda não tem conta? <a href="#" onclick="switchModalTab('register');return false;">Criar agora</a></p>
+      </div>
+      <div class="auth-panel" id="modalRegisterPanel">
+        <h3>Crie sua conta 🎉</h3>
+        <p>Junte-se à comunidade P.U.L.S.E</p>
+        <form id="modalRegisterForm" onsubmit="handleModalRegister(event)">
+          <div class="form-group"><label for="modalRegName">Nome completo</label><input type="text" id="modalRegName" placeholder="Seu nome" required></div>
+          <div class="form-group"><label for="modalRegEmail">E-mail</label><input type="email" id="modalRegEmail" placeholder="seu@email.com" required></div>
+          <div class="form-group"><label for="modalRegPassword">Senha</label><input type="password" id="modalRegPassword" placeholder="Mínimo 6 caracteres" minlength="6" required></div>
+          <div class="form-group"><label for="modalRegCourse">Curso (opcional)</label><input type="text" id="modalRegCourse" placeholder="Ex: Psicologia"></div>
+          <button type="submit" class="btn" style="width:100%;justify-content:center;background:var(--menta-vibrante);">Criar conta</button>
+        </form>
+        <p style="text-align:center;font-size:0.85rem;margin-top:16px;color:var(--texto-suave);">Já tem conta? <a href="#" onclick="switchModalTab('login');return false;">Fazer login</a></p>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="container">
+      <section class="section">
+        <a href="../nutricao.html" style="display:inline-block;margin-bottom:16px;color:var(--texto-suave);font-size:0.85rem;text-decoration:none;">← Voltar para Nutrição</a>
+        <h2 class="section-title">🔥 Calculadora de TMB</h2>
+        <p class="section-sub">A Taxa Metabólica Basal (TMB) é a quantidade de calorias que seu corpo gasta em repouso absoluto para manter funções vitais. Usamos a equação de <strong>Mifflin-St Jeor</strong>, considerada a mais precisa atualmente.</p>
+
+        <div class="nutri-card" style="max-width:600px;margin:0 auto;">
+          <h3 style="font-family:'Nunito',sans-serif;font-weight:800;margin-bottom:16px;">Informe seus dados:</h3>
+
+          <div style="margin-bottom:14px;">
+            <label style="display:block;font-size:0.85rem;font-weight:600;margin-bottom:6px;">Sexo biológico</label>
+            <select id="tmbSexo" style="width:100%;padding:10px 12px;border:1px solid var(--borda);border-radius:10px;font-size:0.9rem;background:var(--lavanda-claro);color:var(--texto);">
+              <option value="m">Masculino</option>
+              <option value="f">Feminino</option>
+            </select>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:16px;">
+            <div>
+              <label style="display:block;font-size:0.85rem;font-weight:600;margin-bottom:6px;">Peso (kg)</label>
+              <input type="number" id="tmbPeso" placeholder="65" step="0.1" style="width:100%;">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.85rem;font-weight:600;margin-bottom:6px;">Altura (cm)</label>
+              <input type="number" id="tmbAltura" placeholder="170" style="width:100%;">
+            </div>
+            <div>
+              <label style="display:block;font-size:0.85rem;font-weight:600;margin-bottom:6px;">Idade</label>
+              <input type="number" id="tmbIdade" placeholder="20" style="width:100%;">
+            </div>
+          </div>
+
+          <button class="btn btn-menta" style="width:100%;justify-content:center;" onclick="calcTMB()">Calcular TMB</button>
+          <div id="tmbResult" style="display:none;margin-top:18px;padding:18px;background:var(--lavanda-claro);border-radius:14px;border-left:4px solid var(--menta-vibrante);"></div>
+        </div>
+
+        <div class="nutri-card" style="max-width:600px;margin:24px auto 0;">
+          <h4 style="font-family:'Nunito',sans-serif;font-weight:800;margin-bottom:12px;">📖 Entenda sua TMB</h4>
+          <p style="font-size:0.88rem;color:var(--texto-suave);line-height:1.7;margin-bottom:12px;">
+            Sua TMB representa cerca de <strong>60% a 70%</strong> do total de calorias que você gasta por dia. O restante vem de atividade física e digestão dos alimentos.
+          </p>
+          <p style="font-size:0.88rem;color:var(--texto-suave);line-height:1.7;">
+            Saber sua TMB é o primeiro passo para entender quantas calorias você precisa consumir. Para saber o gasto total, use a <a href="calorias.html" style="color:var(--coral);font-weight:600;">Calculadora de Calorias</a>.
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <h3 class="brand-title">P.U.L.S.E<span>.</span></h3>
+        <p class="copyright-text">&copy; 2026 Todos os direitos reservados.</p>
+      </div>
+      <div class="footer-middle">
+        <div class="info-block"><h4>Dias Úteis</h4><p class="info-content">📅 Segunda a Sexta: 09h às 18h</p></div>
+        <div class="info-block"><h4>Finais de Semana</h4><p class="info-content">🕐 Sábado: 09h às 13h</p></div>
+        <div class="info-block"><h4>Canais de Suporte</h4><p class="info-content">✉️ <a href="mailto:pulsestudantil@gmail.com" class="link-email">pulsestudantil@gmail.com</a></p></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="disclaimer-title"><strong>ℹ️ Aviso de Projeto Acadêmico</strong></div>
+        <p class="disclaimer-text">Este ambiente digital é um protótipo construído para fins de avaliação acadêmica. Os textos e recomendações de bem-estar servem apenas como massa de dados para testes de usabilidade e interface, não devendo ser utilizados como guia de saúde real. Para orientações médicas, consulte um profissional habilitado.</p>
+        <div class="disclaimer-ai">
+          <strong>🤖 Sobre a heart.ia</strong>
+          <p>A assistente virtual heart.ia é uma ferramenta de apoio informativo e <strong>não substitui, em nenhuma hipótese, o atendimento de profissionais de saúde habilitados</strong>. O uso das informações é de <strong>responsabilidade exclusiva do usuário</strong>. Em caso de crise, ligue <strong>CVV: 188</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script src="../script.js"></script>
+  <script>
+    function calcTMB() {
+      const sexo = document.getElementById('tmbSexo').value;
+      const peso = parseFloat(document.getElementById('tmbPeso').value);
+      const altura = parseFloat(document.getElementById('tmbAltura').value);
+      const idade = parseInt(document.getElementById('tmbIdade').value);
+      const out = document.getElementById('tmbResult');
+
+      if (!peso || !altura || !idade) { showToast('⚠️ Preencha todos os campos!'); return; }
+
+      let tmb;
+      if (sexo === 'm') {
+        tmb = (10 * peso) + (6.25 * altura) - (5 * idade) + 5;
+      } else {
+        tmb = (10 * peso) + (6.25 * altura) - (5 * idade) - 161;
+      }
+
+      out.style.display = 'block';
+      out.style.background = '#D1FAE5';
+      out.innerHTML = `
+        <strong>Sua Taxa Metabólica Basal:</strong>
+        <div style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1.9rem;color:var(--menta-vibrante);margin:6px 0;">${Math.round(tmb)} kcal/dia</div>
+        <p style="font-size:0.85rem;color:var(--texto-suave);margin-top:10px;line-height:1.6;">
+          Isso significa que seu corpo gasta aproximadamente <strong>${Math.round(tmb)} calorias por dia</strong> apenas para manter funções vitais (respiração, batimentos, temperatura) em repouso absoluto.
+        </p>
+        <p style="font-size:0.82rem;color:var(--texto-suave);margin-top:10px;">
+          💡 Para saber seu gasto calórico total (incluindo atividades), use a <strong>Calculadora de Calorias</strong>.
+        </p>
+      `;
+    }
+  </script>
+</body>
+</html>

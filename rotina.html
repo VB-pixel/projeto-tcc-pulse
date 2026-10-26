@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rotina | P.U.L.S.E</title>
+  <meta name="description" content="Organize sua rotina com calendário de lembretes e exercícios físicos." />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <a class="brand-link" href="index.html">P.U.L.S.E</a>
+      <nav aria-label="Navegação Principal">
+        <ul>
+          <li><a href="index.html">Início</a></li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Humor <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="humor.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="humor/monitoramento.html" class="dropdown-link">Monitoramento</a></li>
+              <li><a href="humor/sono.html" class="dropdown-link">Sono</a></li>
+              <li><a href="humor/emocoes.html" class="dropdown-link">Emoções</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Autocuidado <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="autocuidado.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="autocuidado/estudos.html" class="dropdown-link">Estudos</a></li>
+              <li><a href="autocuidado/gratidao.html" class="dropdown-link">Gratidão</a></li>
+              <li><a href="autocuidado/relaxamento.html" class="dropdown-link">Relaxamento</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link active">Rotina <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="rotina.html" class="dropdown-link active">Ver tudo</a></li>
+              <li><a href="rotina/calendario.html" class="dropdown-link">Calendário</a></li>
+              <li><a href="rotina/exercicios.html" class="dropdown-link">Exercícios</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Fórum <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="forum.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="forum/comunidade.html" class="dropdown-link">Comunidade</a></li>
+              <li><a href="forum/sugestoes.html" class="dropdown-link">Sugestões</a></li>
+              <li><a href="forum/ia.html" class="dropdown-link">heart.ia</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Nutrição <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="nutricao.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="nutricao/imc.html" class="dropdown-link">Calculadora IMC</a></li>
+              <li><a href="nutricao/tmb.html" class="dropdown-link">Calculadora TMB</a></li>
+              <li><a href="nutricao/agua.html" class="dropdown-link">Hidratação</a></li>
+              <li><a href="nutricao/calorias.html" class="dropdown-link">Calorias</a></li>
+              <li><a href="nutricao/macros.html" class="dropdown-link">Macronutrientes</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="user-menu" id="userMenu">
+      <button class="user-avatar" id="userAvatar" onclick="toggleUserDropdown()">
+        <span id="avatarIcon">👤</span>
+        <span class="user-status" id="userStatus"></span>
+      </button>
+      <div class="user-dropdown" id="userDropdown">
+        <div class="dropdown-section" id="dropdownLoggedOut">
+          <div class="dropdown-greeting">👋 Olá, visitante!</div>
+          <button class="dropdown-btn btn-primary" onclick="openAuthModal('login')">Entrar</button>
+          <button class="dropdown-btn btn-secondary" onclick="openAuthModal('register')">Criar conta</button>
+        </div>
+        <div class="dropdown-section" id="dropdownLoggedIn" style="display:none;">
+          <div class="dropdown-user-info">
+            <div class="dropdown-avatar-large" id="dropdownAvatar">👤</div>
+            <div class="dropdown-user-details">
+              <div class="dropdown-user-name" id="dropdownUserName">Usuário</div>
+              <div class="dropdown-user-email" id="dropdownUserEmail">email@email.com</div>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-stats">
+            <div class="dropdown-stat"><span class="stat-icon">😊</span><span class="stat-value" id="dropdownMoodCount">0</span><span class="stat-label">humores</span></div>
+            <div class="dropdown-stat"><span class="stat-icon">💧</span><span class="stat-value" id="dropdownWaterCount">0</span><span class="stat-label">copos</span></div>
+            <div class="dropdown-stat"><span class="stat-icon">🍅</span><span class="stat-value" id="dropdownPomodoroCount">0</span><span class="stat-label">sessões</span></div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-btn btn-danger" onclick="handleLogout()">🚪 Sair da conta</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="theme-selector" id="themeSelector">
+      <button class="theme-btn" onclick="toggleThemeMenu(event)" aria-label="Selecionar tema">
+        <span class="theme-icon" id="currentThemeIcon">💻</span>
+      </button>
+      <div class="theme-menu">
+        <button class="theme-option" data-theme="system" onclick="setTheme('system')">
+          <span class="theme-option-icon">💻</span>
+          <div class="theme-option-text"><strong>Modo do Sistema</strong><span>Acompanha seu dispositivo</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+        <button class="theme-option" data-theme="light" onclick="setTheme('light')">
+          <span class="theme-option-icon">☀️</span>
+          <div class="theme-option-text"><strong>Modo Claro</strong><span>Sempre claro</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+        <button class="theme-option" data-theme="dark" onclick="setTheme('dark')">
+          <span class="theme-option-icon">🌙</span>
+          <div class="theme-option-text"><strong>Modo Escuro</strong><span>Sempre escuro</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="auth-modal-overlay" id="authModal">
+    <div class="auth-modal">
+      <button class="auth-modal-close" onclick="closeAuthModal()">✕</button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login" onclick="switchModalTab('login')">Entrar</button>
+        <button class="auth-tab" data-tab="register" onclick="switchModalTab('register')">Criar Conta</button>
+      </div>
+      <div class="auth-panel active" id="modalLoginPanel">
+        <h3>Bem-vindo de volta! 👋</h3>
+        <p>Entre para acompanhar seu progresso</p>
+        <form id="modalLoginForm" onsubmit="handleModalLogin(event)">
+          <div class="form-group"><label for="modalLoginEmail">E-mail</label><input type="email" id="modalLoginEmail" placeholder="seu@email.com" required></div>
+          <div class="form-group"><label for="modalLoginPassword">Senha</label><input type="password" id="modalLoginPassword" placeholder="••••••••" required></div>
+          <button type="submit" class="btn" style="width:100%;justify-content:center;">Entrar</button>
+        </form>
+        <p style="text-align:center;font-size:0.85rem;margin-top:16px;color:var(--texto-suave);">Ainda não tem conta? <a href="#" onclick="switchModalTab('register');return false;">Criar agora</a></p>
+      </div>
+      <div class="auth-panel" id="modalRegisterPanel">
+        <h3>Crie sua conta 🎉</h3>
+        <p>Junte-se à comunidade P.U.L.S.E</p>
+        <form id="modalRegisterForm" onsubmit="handleModalRegister(event)">
+          <div class="form-group"><label for="modalRegName">Nome completo</label><input type="text" id="modalRegName" placeholder="Seu nome" required></div>
+          <div class="form-group"><label for="modalRegEmail">E-mail</label><input type="email" id="modalRegEmail" placeholder="seu@email.com" required></div>
+          <div class="form-group"><label for="modalRegPassword">Senha</label><input type="password" id="modalRegPassword" placeholder="Mínimo 6 caracteres" minlength="6" required></div>
+          <div class="form-group"><label for="modalRegCourse">Curso (opcional)</label><input type="text" id="modalRegCourse" placeholder="Ex: Psicologia"></div>
+          <button type="submit" class="btn" style="width:100%;justify-content:center;background:var(--menta-vibrante);">Criar conta</button>
+        </form>
+        <p style="text-align:center;font-size:0.85rem;margin-top:16px;color:var(--texto-suave);">Já tem conta? <a href="#" onclick="switchModalTab('login');return false;">Fazer login</a></p>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <div class="container">
+      <section class="section">
+        <h2 class="section-title">📅 Rotina & Bem-Estar Físico</h2>
+        <p class="section-sub">Organize seus lembretes e mantenha uma rotina saudável com exercícios.</p>
+
+        <div class="autocuidado-grid">
+          <a href="rotina/calendario.html" class="mind-card lavanda" style="text-decoration:none;color:inherit;">
+            <div style="font-size:2.5rem;margin-bottom:12px;">📅</div>
+            <h3>Calendário & Lembretes</h3>
+            <p>Marque provas, compromissos, alarmes e lembretes importantes. Tudo salvo no seu dispositivo.</p>
+            <span class="btn btn-sm" style="margin-top:8px;">Explorar →</span>
+          </a>
+
+          <a href="rotina/exercicios.html" class="mind-card menta" style="text-decoration:none;color:inherit;">
+            <div style="font-size:2.5rem;margin-bottom:12px;">🏃</div>
+            <h3>Exercícios Físicos</h3>
+            <p>Registre seus treinos, acompanhe a frequência e receba sugestões de rotinas.</p>
+            <span class="btn btn-sm" style="margin-top:8px;">Explorar →</span>
+          </a>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <h3 class="brand-title">P.U.L.S.E<span>.</span></h3>
+        <p class="copyright-text">&copy; 2026 Todos os direitos reservados.</p>
+      </div>
+      <div class="footer-middle">
+        <div class="info-block"><h4>Dias Úteis</h4><p class="info-content">📅 Segunda a Sexta: 09h às 18h</p></div>
+        <div class="info-block"><h4>Finais de Semana</h4><p class="info-content">🕐 Sábado: 09h às 13h</p></div>
+        <div class="info-block"><h4>Canais de Suporte</h4><p class="info-content">✉️ <a href="mailto:pulsestudantil@gmail.com" class="link-email">pulsestudantil@gmail.com</a></p></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="disclaimer-title"><strong>ℹ️ Aviso de Projeto Acadêmico</strong></div>
+        <p class="disclaimer-text">Este ambiente digital é um protótipo construído para fins de avaliação acadêmica. Os textos e recomendações de bem-estar servem apenas como massa de dados para testes de usabilidade e interface, não devendo ser utilizados como guia de saúde real. Para orientações médicas, consulte um profissional habilitado.</p>
+        <div class="disclaimer-ai">
+          <strong>🤖 Sobre a heart.ia</strong>
+          <p>A assistente virtual heart.ia é uma ferramenta de apoio informativo e <strong>não substitui, em nenhuma hipótese, o atendimento de profissionais de saúde habilitados</strong>. O uso das informações é de <strong>responsabilidade exclusiva do usuário</strong>. Em caso de crise, ligue <strong>CVV: 188</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>

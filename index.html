@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Início | P.U.L.S.E</title>
+  <meta name="description" content="Plataforma P.U.L.S.E para apoio ao bem-estar estudantil." />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <!-- ═══════════════════════════════════════════════════════════
+       HEADER
+       ═══════════════════════════════════════════════════════════ -->
+  <header>
+    <div class="container">
+      <a class="brand-link" href="index.html">P.U.L.S.E</a>
+      <nav aria-label="Navegação Principal">
+        <ul>
+          <li><a href="index.html" class="active">Início</a></li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Humor <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="humor.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="humor/monitoramento.html" class="dropdown-link">Monitoramento</a></li>
+              <li><a href="humor/sono.html" class="dropdown-link">Sono</a></li>
+              <li><a href="humor/emocoes.html" class="dropdown-link">Emoções</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Autocuidado <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="autocuidado.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="autocuidado/estudos.html" class="dropdown-link">Estudos</a></li>
+              <li><a href="autocuidado/gratidao.html" class="dropdown-link">Gratidão</a></li>
+              <li><a href="autocuidado/relaxamento.html" class="dropdown-link">Relaxamento</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Rotina <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="rotina.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="rotina/calendario.html" class="dropdown-link">Calendário</a></li>
+              <li><a href="rotina/exercicios.html" class="dropdown-link">Exercícios</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Fórum <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="forum.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="forum/comunidade.html" class="dropdown-link">Comunidade</a></li>
+              <li><a href="forum/sugestoes.html" class="dropdown-link">Sugestões</a></li>
+              <li><a href="forum/ia.html" class="dropdown-link">heart.ia</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Nutrição <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="nutricao.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="nutricao/imc.html" class="dropdown-link">Calculadora IMC</a></li>
+              <li><a href="nutricao/tmb.html" class="dropdown-link">Calculadora TMB</a></li>
+              <li><a href="nutricao/agua.html" class="dropdown-link">Hidratação</a></li>
+              <li><a href="nutricao/calorias.html" class="dropdown-link">Calorias</a></li>
+              <li><a href="nutricao/macros.html" class="dropdown-link">Macronutrientes</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- USER MENU -->
+    <div class="user-menu" id="userMenu">
+      <button class="user-avatar" id="userAvatar" onclick="toggleUserDropdown()">
+        <span id="avatarIcon">👤</span>
+        <span class="user-status" id="userStatus"></span>
+      </button>
+      <div class="user-dropdown" id="userDropdown">
+        <div class="dropdown-section" id="dropdownLoggedOut">
+          <div class="dropdown-greeting">👋 Olá, visitante!</div>
+          <button class="dropdown-btn btn-primary" onclick="openAuthModal('login')">Entrar</button>
+          <button class="dropdown-btn btn-secondary" onclick="openAuthModal('register')">Criar conta</button>
+        </div>
+        <div class="dropdown-section" id="dropdownLoggedIn" style="display:none;">
+          <div class="dropdown-user-info">
+            <div class="dropdown-avatar-large" id="dropdownAvatar">👤</div>
+            <div class="dropdown-user-details">
+              <div class="dropdown-user-name" id="dropdownUserName">Usuário</div>
+              <div class="dropdown-user-email" id="dropdownUserEmail">email@email.com</div>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-stats">
+            <div class="dropdown-stat"><span class="stat-icon">😊</span><span class="stat-value" id="dropdownMoodCount">0</span><span class="stat-label">humores</span></div>
+            <div class="dropdown-stat"><span class="stat-icon">💧</span><span class="stat-value" id="dropdownWaterCount">0</span><span class="stat-label">copos</span></div>
+            <div class="dropdown-stat"><span class="stat-icon">🍅</span><span class="stat-value" id="dropdownPomodoroCount">0</span><span class="stat-label">sessões</span></div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-btn btn-danger" onclick="handleLogout()">🚪 Sair da conta</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- THEME SELECTOR -->
+    <div class="theme-selector" id="themeSelector">
+      <button class="theme-btn" onclick="toggleThemeMenu(event)" aria-label="Selecionar tema">
+        <span class="theme-icon" id="currentThemeIcon">💻</span>
+      </button>
+      <div class="theme-menu">
+        <button class="theme-option" data-theme="system" onclick="setTheme('system')">
+          <span class="theme-option-icon">💻</span>
+          <div class="theme-option-text"><strong>Modo do Sistema</strong><span>Acompanha seu dispositivo</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+        <button class="theme-option" data-theme="light" onclick="setTheme('light')">
+          <span class="theme-option-icon">☀️</span>
+          <div class="theme-option-text"><strong>Modo Claro</strong><span>Sempre claro</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+        <button class="theme-option" data-theme="dark" onclick="setTheme('dark')">
+          <span class="theme-option-icon">🌙</span>
+          <div class="theme-option-text"><strong>Modo Escuro</strong><span>Sempre escuro</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MODAL DE AUTENTICAÇÃO -->
+  <div class="auth-modal-overlay" id="authModal">
+    <div class="auth-modal">
+      <button class="auth-modal-close" onclick="closeAuthModal()">✕</button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login" onclick="switchModalTab('login')">Entrar</button>
+        <button class="auth-tab" data-tab="register" onclick="switchModalTab('register')">Criar Conta</button>
+      </div>
+      <div class="auth-panel active" id="modalLoginPanel">
+        <h3>Bem-vindo de volta! 👋</h3>
+        <p>Entre para acompanhar seu progresso</p>
+        <form id="modalLoginForm" onsubmit="handleModalLogin(event)">
+          <div class="form-group"><label for="modalLoginEmail">E-mail</label><input type="email" id="modalLoginEmail" placeholder="seu@email.com" required></div>
+          <div class="form-group"><label for="modalLoginPassword">Senha</label><input type="password" id="modalLoginPassword" placeholder="••••••••" required></div>
+          <button type="submit" class="btn" style="width:100%;justify-content:center;">Entrar</button>
+        </form>
+        <p style="text-align:center;font-size:0.85rem;margin-top:16px;color:var(--texto-suave);">Ainda não tem conta? <a href="#" onclick="switchModalTab('register');return false;">Criar agora</a></p>
+      </div>
+      <div class="auth-panel" id="modalRegisterPanel">
+        <h3>Crie sua conta 🎉</h3>
+        <p>Junte-se à comunidade P.U.L.S.E</p>
+        <form id="modalRegisterForm" onsubmit="handleModalRegister(event)">
+          <div class="form-group"><label for="modalRegName">Nome completo</label><input type="text" id="modalRegName" placeholder="Seu nome" required></div>
+          <div class="form-group"><label for="modalRegEmail">E-mail</label><input type="email" id="modalRegEmail" placeholder="seu@email.com" required></div>
+          <div class="form-group"><label for="modalRegPassword">Senha</label><input type="password" id="modalRegPassword" placeholder="Mínimo 6 caracteres" minlength="6" required></div>
+          <div class="form-group"><label for="modalRegCourse">Curso (opcional)</label><input type="text" id="modalRegCourse" placeholder="Ex: Psicologia"></div>
+          <button type="submit" class="btn" style="width:100%;justify-content:center;background:var(--menta-vibrante);">Criar conta</button>
+        </form>
+        <p style="text-align:center;font-size:0.85rem;margin-top:16px;color:var(--texto-suave);">Já tem conta? <a href="#" onclick="switchModalTab('login');return false;">Fazer login</a></p>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <!-- ═══════════════════════════════════════════════════════════
+         VISÃO 1: USUÁRIO NÃO LOGADO (Visitante)
+         ═══════════════════════════════════════════════════════════ -->
+    <div id="homeVisitante">
+      <!-- Hero de Visitante -->
+      <section class="hero">
+        <div class="container hero-content">
+          <span class="hero-tag">Saúde Emocional • Física • Social</span>
+          <h1>P.U.L.S.E</h1>
+          <h2>Programa Universitário Ligado à Saúde Estudantil</h2>
+          <p>Faça login para desbloquear seu monitoramento de humor, IA, rotina e muito mais.</p>
+          <div class="hero-ctas">
+            <button class="btn" onclick="openAuthModal('register')">Criar minha conta grátis</button>
+            <button class="btn btn-outline" onclick="openAuthModal('login')">Já tenho conta</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features Bloqueadas -->
+      <div class="container">
+        <div class="features-grid">
+          <div class="feature-card" onclick="openAuthModal('login')" style="cursor:pointer; opacity:0.8;">
+            <span class="feature-icon">🔒</span>
+            <h3>Monitoramento de Humor</h3>
+            <p>Disponível apenas para alunos logados.</p>
+          </div>
+          <div class="feature-card" onclick="openAuthModal('login')" style="cursor:pointer; opacity:0.8;">
+            <span class="feature-icon">🔒</span>
+            <h3>Autocuidado</h3>
+            <p>Disponível apenas para alunos logados.</p>
+          </div>
+          <div class="feature-card" onclick="openAuthModal('login')" style="cursor:pointer; opacity:0.8;">
+            <span class="feature-icon">🔒</span>
+            <h3>Rotina & Exercícios</h3>
+            <p>Disponível apenas para alunos logados.</p>
+          </div>
+          <div class="feature-card" onclick="openAuthModal('login')" style="cursor:pointer; opacity:0.8;">
+            <span class="feature-icon">🔒</span>
+            <h3>Fórum & heart.ia</h3>
+            <p>Disponível apenas para alunos logados.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção "Como Funciona" (Mantida) -->
+      <section class="section como-funciona">
+        <div class="como-header">
+          <h2 class="section-title">Como o P.U.L.S.E funciona</h2>
+          <p class="section-sub">Três passos simples para cuidar do seu bem-estar.</p>
+        </div>
+        <div class="como-grid">
+          <div class="como-step">
+            <div class="como-number">1</div>
+            <div class="como-icon">✍️</div>
+            <h3>Registre seu dia</h3>
+            <p>Anote humor, sono, exercícios e o que mais importa para você.</p>
+          </div>
+          <div class="como-step">
+            <div class="como-number">2</div>
+            <div class="como-icon">💚</div>
+            <h3>Receba apoio</h3>
+            <p>Converse com a heart.ia, acesse técnicas e tire dúvidas no fórum.</p>
+          </div>
+          <div class="como-step">
+            <div class="como-number">3</div>
+            <div class="como-icon">📊</div>
+            <h3>Acompanhe o progresso</h3>
+            <p>Veja gráficos e estatísticas dos seus hábitos ao longo do tempo.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção "Números" (Mantida) -->
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">Seu bem-estar, em números</h2>
+          <p class="section-sub">Estatísticas da comunidade P.U.L.S.E esta semana</p>
+          <div style="background:var(--branco);border-radius:20px;padding:32px;box-shadow:0 4px 16px var(--sombra);border:1px solid var(--borda);">
+            <div class="chart-bar-wrap">
+              <div class="chart-bar-label"><span>😄 Muito bem</span><span>38%</span></div>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:38%"></div></div>
+            </div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar-label"><span>🙂 Bem</span><span>29%</span></div>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:29%"></div></div>
+            </div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar-label"><span>😐 Neutro</span><span>18%</span></div>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:18%;background:linear-gradient(90deg,var(--lavanda-medio),var(--lavanda))"></div></div>
+            </div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar-label"><span>😔 Mal</span><span>10%</span></div>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:10%;background:linear-gradient(90deg,var(--coral),var(--coral-escuro))"></div></div>
+            </div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar-label"><span>😢 Muito mal</span><span>5%</span></div>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:5%;background:linear-gradient(90deg,var(--coral-escuro),#c04030)"></div></div>
+            </div>
+            <p style="font-size:0.8rem;color:var(--texto-suave);margin-top:16px;">Com base em 1.247 registros de humor essa semana na comunidade.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         VISÃO 2: USUÁRIO LOGADO (Aluno)
+         ═══════════════════════════════════════════════════════════ -->
+    <div id="homeLogado" style="display: none;">
+      <!-- Hero de Logado -->
+      <section class="hero" style="min-height: 40vh;">
+        <div class="container hero-content">
+          <span class="hero-tag" style="background: var(--menta); color: var(--menta-vibrante);">Área do Aluno</span>
+          <h1>Olá, <span id="welcomeName">Aluno</span>!</h1>
+          <h2>Que bom ter você aqui.</h2>
+          <p>Seu painel de bem-estar está pronto. Escolha por onde começar hoje.</p>
+        </div>
+      </section>
+
+      <!-- Features Liberadas -->
+      <div class="container">
+        <div class="features-grid">
+          <a href="humor/monitoramento.html" class="feature-card">
+            <span class="feature-icon">😊</span>
+            <h3>Monitoramento de Humor</h3>
+            <p>Registre como você se sente hoje.</p>
+          </a>
+          <a href="autocuidado.html" class="feature-card">
+            <span class="feature-icon">🧘</span>
+            <h3>Autocuidado</h3>
+            <p>Pomodoro, gratidão e relaxamento.</p>
+          </a>
+          <a href="rotina.html" class="feature-card">
+            <span class="feature-icon">📅</span>
+            <h3>Rotina & Exercícios</h3>
+            <p>Organize seus lembretes e treinos.</p>
+          </a>
+          <a href="forum/ia.html" class="feature-card">
+            <span class="feature-icon">🤖</span>
+            <h3>Fórum & heart.ia</h3>
+            <p>Converse com a IA e tire dúvidas.</p>
+          </a>
+        </div>
+      </div>
+
+      <!-- Seção "Como Funciona" (Mantida) -->
+      <section class="section como-funciona">
+        <div class="como-header">
+          <h2 class="section-title">Como o P.U.L.S.E funciona</h2>
+          <p class="section-sub">Três passos simples para cuidar do seu bem-estar.</p>
+        </div>
+        <div class="como-grid">
+          <div class="como-step">
+            <div class="como-number">1</div>
+            <div class="como-icon">✍️</div>
+            <h3>Registre seu dia</h3>
+            <p>Anote humor, sono, exercícios e o que mais importa para você.</p>
+          </div>
+          <div class="como-step">
+            <div class="como-number">2</div>
+            <div class="como-icon">💚</div>
+            <h3>Receba apoio</h3>
+            <p>Converse com a heart.ia, acesse técnicas e tire dúvidas no fórum.</p>
+          </div>
+          <div class="como-step">
+            <div class="como-number">3</div>
+            <div class="como-icon">📊</div>
+            <h3>Acompanhe o progresso</h3>
+            <p>Veja gráficos e estatísticas dos seus hábitos ao longo do tempo.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Seção "Números" (Mantida) -->
+      <section class="section">
+        <div class="container">
+          <h2 class="section-title">Seu bem-estar, em números</h2>
+          <p class="section-sub">Estatísticas da comunidade P.U.L.S.E esta semana</p>
+          <div style="background:var(--branco);border-radius:20px;padding:32px;box-shadow:0 4px 16px var(--sombra);border:1px solid var(--borda);">
+            <div class="chart-bar-wrap">
+              <div class="chart-bar-label"><span>😄 Muito bem</span><span>38%</span></div>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:38%"></div></div>
+            </div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar-label"><span>🙂 Bem</span><span>29%</span></div>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:29%"></div></div>
+            </div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar-label"><span>😐 Neutro</span><span>18%</span></div>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:18%;background:linear-gradient(90deg,var(--lavanda-medio),var(--lavanda))"></div></div>
+            </div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar-label"><span>😔 Mal</span><span>10%</span></div>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:10%;background:linear-gradient(90deg,var(--coral),var(--coral-escuro))"></div></div>
+            </div>
+            <div class="chart-bar-wrap">
+              <div class="chart-bar-label"><span>😢 Muito mal</span><span>5%</span></div>
+              <div class="chart-bar-track"><div class="chart-bar-fill" style="width:5%;background:linear-gradient(90deg,var(--coral-escuro),#c04030)"></div></div>
+            </div>
+            <p style="font-size:0.8rem;color:var(--texto-suave);margin-top:16px;">Com base em 1.247 registros de humor essa semana na comunidade.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <h3 class="brand-title">P.U.L.S.E<span>.</span></h3>
+        <p class="copyright-text">&copy; 2026 Todos os direitos reservados.</p>
+      </div>
+      <div class="footer-middle">
+        <div class="info-block"><h4>Dias Úteis</h4><p class="info-content">📅 Segunda a Sexta: 09h às 18h</p></div>
+        <div class="info-block"><h4>Finais de Semana</h4><p class="info-content">🕐 Sábado: 09h às 13h</p></div>
+        <div class="info-block"><h4>Canais de Suporte</h4><p class="info-content">✉️ <a href="mailto:pulsestudantil@gmail.com" class="link-email">pulsestudantil@gmail.com</a></p></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="disclaimer-title"><strong>ℹ️ Aviso de Projeto Acadêmico</strong></div>
+        <p class="disclaimer-text">Este ambiente digital é um protótipo construído para fins de avaliação acadêmica. Os textos e recomendações de bem-estar servem apenas como massa de dados para testes de usabilidade e interface, não devendo ser utilizados como guia de saúde real. Para orientações médicas, consulte um profissional habilitado.</p>
+        <div class="disclaimer-ai">
+          <strong>🤖 Sobre a heart.ia</strong>
+          <p>A assistente virtual heart.ia é uma ferramenta de apoio informativo e <strong>não substitui, em nenhuma hipótese, o atendimento de profissionais de saúde habilitados</strong>. O uso das informações é de <strong>responsabilidade exclusiva do usuário</strong>. Em caso de crise, ligue <strong>CVV: 188</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>

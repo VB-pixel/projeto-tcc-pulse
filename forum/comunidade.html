@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Comunidade | P.U.L.S.E</title>
+  <meta name="description" content="Mural da comunidade P.U.L.S.E: compartilhe experiências, apoie colegas e encontre suporte estudantil." />
+  <link rel="icon" type="image/x-icon" href="../favicon.ico" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <link rel="stylesheet" href="../style.css" />
+</head>
+
+<body>
+  <!-- ═══════════════ HEADER (idêntico ao resto do site) ═══════════════ -->
+  <header>
+    <div class="container">
+      <a class="brand-link" href="../index.html">P.U.L.S.E</a>
+      <nav aria-label="Navegação Principal">
+        <ul>
+          <li><a href="../index.html">Início</a></li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Humor <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="../humor.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="../humor/monitoramento.html" class="dropdown-link">Monitoramento</a></li>
+              <li><a href="../humor/sono.html" class="dropdown-link">Sono</a></li>
+              <li><a href="../humor/emocoes.html" class="dropdown-link">Emoções</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Autocuidado <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="../autocuidado.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="../autocuidado/estudos.html" class="dropdown-link">Estudos</a></li>
+              <li><a href="../autocuidado/gratidao.html" class="dropdown-link">Gratidão</a></li>
+              <li><a href="../autocuidado/relaxamento.html" class="dropdown-link">Relaxamento</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Rotina <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="../rotina.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="../rotina/calendario.html" class="dropdown-link">Calendário</a></li>
+              <li><a href="../rotina/exercicios.html" class="dropdown-link">Exercícios</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link active">Fórum <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="../forum.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="comunidade.html" class="dropdown-link active">Comunidade</a></li>
+              <li><a href="sugestoes.html" class="dropdown-link">Sugestões</a></li>
+              <li><a href="ia.html" class="dropdown-link">heart.ia</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <button type="button" class="nav-link">Nutrição <span class="nav-arrow">▾</span></button>
+            <ul class="dropdown-menu">
+              <li><a href="../nutricao.html" class="dropdown-link">Ver tudo</a></li>
+              <li><a href="../nutricao/imc.html" class="dropdown-link">Calculadora IMC</a></li>
+              <li><a href="../nutricao/tmb.html" class="dropdown-link">Calculadora TMB</a></li>
+              <li><a href="../nutricao/agua.html" class="dropdown-link">Hidratação</a></li>
+              <li><a href="../nutricao/calorias.html" class="dropdown-link">Calorias</a></li>
+              <li><a href="../nutricao/macros.html" class="dropdown-link">Macronutrientes</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="user-menu" id="userMenu">
+      <button class="user-avatar" id="userAvatar" onclick="toggleUserDropdown()">
+        <span id="avatarIcon">👤</span>
+        <span class="user-status" id="userStatus"></span>
+      </button>
+      <div class="user-dropdown" id="userDropdown">
+        <div class="dropdown-section" id="dropdownLoggedOut">
+          <div class="dropdown-greeting">👋 Olá, visitante!</div>
+          <button class="dropdown-btn btn-primary" onclick="openAuthModal('login')">Entrar</button>
+          <button class="dropdown-btn btn-secondary" onclick="openAuthModal('register')">Criar conta</button>
+        </div>
+        <div class="dropdown-section" id="dropdownLoggedIn" style="display:none;">
+          <div class="dropdown-user-info">
+            <div class="dropdown-avatar-large" id="dropdownAvatar">👤</div>
+            <div class="dropdown-user-details">
+              <div class="dropdown-user-name" id="dropdownUserName">Usuário</div>
+              <div class="dropdown-user-email" id="dropdownUserEmail">email@email.com</div>
+            </div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-stats">
+            <div class="dropdown-stat"><span class="stat-icon">😊</span><span class="stat-value" id="dropdownMoodCount">0</span><span class="stat-label">humores</span></div>
+            <div class="dropdown-stat"><span class="stat-icon">💧</span><span class="stat-value" id="dropdownWaterCount">0</span><span class="stat-label">copos</span></div>
+            <div class="dropdown-stat"><span class="stat-icon">🍅</span><span class="stat-value" id="dropdownPomodoroCount">0</span><span class="stat-label">sessões</span></div>
+          </div>
+          <div class="dropdown-divider"></div>
+          <button class="dropdown-btn btn-danger" onclick="handleLogout()">🚪 Sair da conta</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="theme-selector" id="themeSelector">
+      <button class="theme-btn" onclick="toggleThemeMenu(event)" aria-label="Selecionar tema">
+        <span class="theme-icon" id="currentThemeIcon">💻</span>
+      </button>
+      <div class="theme-menu">
+        <button class="theme-option" data-theme="system" onclick="setTheme('system')">
+          <span class="theme-option-icon">💻</span>
+          <div class="theme-option-text"><strong>Modo do Sistema</strong><span>Acompanha seu dispositivo</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+        <button class="theme-option" data-theme="light" onclick="setTheme('light')">
+          <span class="theme-option-icon">☀️</span>
+          <div class="theme-option-text"><strong>Modo Claro</strong><span>Sempre claro</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+        <button class="theme-option" data-theme="dark" onclick="setTheme('dark')">
+          <span class="theme-option-icon">🌙</span>
+          <div class="theme-option-text"><strong>Modo Escuro</strong><span>Sempre escuro</span></div>
+          <span class="theme-check">✓</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MODAL DE AUTENTICAÇÃO -->
+  <div class="auth-modal-overlay" id="authModal">
+    <div class="auth-modal">
+      <button class="auth-modal-close" onclick="closeAuthModal()">✕</button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-tab="login" onclick="switchModalTab('login')">Entrar</button>
+        <button class="auth-tab" data-tab="register" onclick="switchModalTab('register')">Criar Conta</button>
+      </div>
+      <div class="auth-panel active" id="modalLoginPanel">
+        <h3>Bem-vindo de volta! 👋</h3>
+        <p>Entre para acompanhar seu progresso</p>
+        <form id="modalLoginForm" onsubmit="handleModalLogin(event)">
+          <div class="form-group"><label for="modalLoginEmail">E-mail</label><input type="email" id="modalLoginEmail" placeholder="seu@email.com" required></div>
+          <div class="form-group"><label for="modalLoginPassword">Senha</label><input type="password" id="modalLoginPassword" placeholder="••••••••" required></div>
+          <button type="submit" class="btn" style="width:100%;justify-content:center;">Entrar</button>
+        </form>
+        <p style="text-align:center;font-size:0.85rem;margin-top:16px;color:var(--texto-suave);">Ainda não tem conta? <a href="#" onclick="switchModalTab('register');return false;">Criar agora</a></p>
+      </div>
+      <div class="auth-panel" id="modalRegisterPanel">
+        <h3>Crie sua conta 🎉</h3>
+        <p>Junte-se à comunidade P.U.L.S.E</p>
+        <form id="modalRegisterForm" onsubmit="handleModalRegister(event)">
+          <div class="form-group"><label for="modalRegName">Nome completo</label><input type="text" id="modalRegName" placeholder="Seu nome" required></div>
+          <div class="form-group"><label for="modalRegEmail">E-mail</label><input type="email" id="modalRegEmail" placeholder="seu@email.com" required></div>
+          <div class="form-group"><label for="modalRegPassword">Senha</label><input type="password" id="modalRegPassword" placeholder="Mínimo 6 caracteres" minlength="6" required></div>
+          <div class="form-group"><label for="modalRegCourse">Curso (opcional)</label><input type="text" id="modalRegCourse" placeholder="Ex: Psicologia"></div>
+          <button type="submit" class="btn" style="width:100%;justify-content:center;background:var(--menta-vibrante);">Criar conta</button>
+        </form>
+        <p style="text-align:center;font-size:0.85rem;margin-top:16px;color:var(--texto-suave);">Já tem conta? <a href="#" onclick="switchModalTab('login');return false;">Fazer login</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ CONTEÚDO PRINCIPAL ═══════════════ -->
+  <main>
+    <div class="container">
+      <section class="section">
+
+        <!-- CABEÇALHO DA COMUNIDADE -->
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:24px;">
+          <div>
+            <h2 class="section-title">🫂 Comunidade P.U.L.S.E</h2>
+            <p class="section-sub" style="margin-bottom:0;">Compartilhe experiências, apoie colegas e sinta-se acolhido.</p>
+          </div>
+          <button class="btn" id="openNewPost" style="background:var(--menta-vibrante); color:#FFF;">
+            ✍️ Compartilhar
+          </button>
+        </div>
+
+        <!-- STATS DA COMUNIDADE -->
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:24px;">
+          <div class="stat-card">
+            <div class="stat-card-icon">👥</div>
+            <div class="stat-card-value">1.248</div>
+            <div class="stat-card-label">Membros</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">💬</div>
+            <div class="stat-card-value">342</div>
+            <div class="stat-card-label">Posts</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">💚</div>
+            <div class="stat-card-value">5.6k</div>
+            <div class="stat-card-label">Reações</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-icon">🟢</div>
+            <div class="stat-card-value">47</div>
+            <div class="stat-card-label">Online agora</div>
+          </div>
+        </div>
+
+        <!-- AVISO DE ESPAÇO SEGURO -->
+        <div style="background:linear-gradient(135deg, var(--menta-suave), var(--lavanda-claro));border:1px solid var(--borda);border-radius:16px;padding:16px 20px;margin-bottom:24px;display:flex;gap:12px;align-items:center;">
+          <span style="font-size:1.6rem;">💚</span>
+          <p style="font-size:0.88rem;color:var(--texto);margin:0;">
+            <strong>Espaço Seguro:</strong> Aqui, cada estudante tem voz. Compartilhe vitórias, desafios e dicas. Nossos voluntários e a comunidade estão aqui para ouvir e apoiar. <strong>Respeito é regra.</strong>
+          </p>
+        </div>
+
+        <!-- POST EM DESTAQUE -->
+        <div style="background:linear-gradient(135deg, var(--coral), var(--menta-escuro));border-radius:20px;padding:24px;margin-bottom:28px;color:#FFF;position:relative;overflow:hidden;box-shadow:0 8px 24px rgba(255,127,106,0.25);">
+          <div style="position:absolute;top:-10px;right:-10px;font-size:8rem;opacity:0.15;">🏆</div>
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;position:relative;z-index:1;">
+            <span style="font-size:1.4rem;">🏆</span>
+            <strong style="font-family:'Nunito',sans-serif;font-size:0.85rem;letter-spacing:1.5px;text-transform:uppercase;">Post mais apoiado da semana</strong>
+          </div>
+          <p style="font-size:0.95rem;line-height:1.65;margin-bottom:14px;position:relative;z-index:1;">
+            <strong>"Voltei a estudar após um burnout e quero agradecer a esta comunidade."</strong><br>
+            "Há 6 meses eu não conseguia abrir um livro sem entrar em pânico. Hoje terminei meu primeiro capítulo. Cada 💪 que recebi aqui me ajudou a chegar até aqui. Obrigado, P.U.L.S.E!"
+          </p>
+          <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;position:relative;z-index:1;">
+            <span style="background:rgba(255,255,255,0.25);padding:4px 12px;border-radius:999px;">💪 284 Força</span>
+            <span style="background:rgba(255,255,255,0.25);padding:4px 12px;border-radius:999px;">🫂 156 Abraços</span>
+            <span style="background:rgba(255,255,255,0.25);padding:4px 12px;border-radius:999px;">— Marina R.</span>
+          </div>
+        </div>
+
+        <!-- BARRA DE BUSCA + FILTROS -->
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+          <div style="position:relative;">
+            <input 
+              type="text" 
+              id="buscaPost" 
+              placeholder="🔍 Buscar posts, temas ou autores..." 
+              style="width:100%;padding:14px 18px 14px 18px;border:1px solid var(--borda);border-radius:14px;font-size:0.9rem;font-family:'Inter',sans-serif;background:var(--branco);color:var(--texto);transition:border 0.2s, box-shadow 0.2s;"
+              onfocus="this.style.borderColor='var(--coral)';this.style.boxShadow='0 0 0 3px rgba(255,127,106,0.15)'"
+              onblur="this.style.borderColor='var(--borda)';this.style.boxShadow='none'"
+            >
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="nutri-tab active" data-filter="all">Todos</button>
+            <button class="nutri-tab" data-filter="mental">🧠 Saúde Mental</button>
+            <button class="nutri-tab" data-filter="fisica">💪 Saúde Física</button>
+            <button class="nutri-tab" data-filter="nutri">🥗 Nutrição</button>
+            <button class="nutri-tab" data-filter="sono">😴 Sono</button>
+            <button class="nutri-tab" data-filter="rotina">📅 Rotina</button>
+          </div>
+        </div>
+
+        <!-- GRID: POSTS + SIDEBAR -->
+        <div style="display:grid;grid-template-columns:1fr;gap:24px;" id="comunidadeLayout">
+
+          <!-- COLUNA ESQUERDA: POSTS -->
+          <div id="forumPosts">
+
+            <!-- POST 1 -->
+            <div class="forum-post post-item" data-category="mental" data-search="lucas engenharia provas ansiedade">
+              <div class="post-header">
+                <div class="post-avatar" style="background:linear-gradient(135deg, var(--lavanda-medio), var(--coral));">L</div>
+                <div class="post-meta">
+                  <div class="post-author">
+                    Lucas M. (Engenharia) 
+                    <span class="post-tag" style="background:var(--lavanda);font-size:0.65rem;padding:2px 8px;margin-left:4px;">🎖️ Apoiador</span>
+                  </div>
+                  <div class="post-date">Há 1 hora · 🟢 online</div>
+                </div>
+              </div>
+              <p class="post-body"><strong>Semana de provas tá pesada...</strong><br><br>
+                Gente, confesso que tô bem ansioso com as entregas dessa semana. A pressão tá grande, mas lembrei de respirar e organizar as prioridades. Alguém mais na mesma situação? Como vocês lidam com o acúmulo de tarefas?</p>
+              <div class="post-tags">
+                <span class="post-tag">🧠 Saúde Mental</span>
+                <span class="post-tag">📚 Provas</span>
+              </div>
+              <div class="post-actions">
+                <button class="post-action-btn reaction-btn" title="Enviar força">
+                  <span class="reaction-icon">💪</span> <span class="reaction-count">24</span> Força
+                </button>
+                <button class="post-action-btn reaction-btn" title="Enviar abraço">
+                  <span class="reaction-icon">🫂</span> <span class="reaction-count">15</span> Abraço
+                </button>
+                <button class="post-action-btn reaction-btn" title="Enviar incentivo">
+                  <span class="reaction-icon">🚀</span> <span class="reaction-count">8</span> Você consegue!
+                </button>
+                <button class="post-action-btn" title="Ver comentários">
+                  <span>💬</span> <span>12</span>
+                </button>
+              </div>
+              <!-- PRÉVIA DE COMENTÁRIO -->
+              <div style="margin-top:14px;padding:12px 14px;background:var(--lavanda-claro);border-radius:12px;border-left:3px solid var(--menta-escuro);">
+                <div style="display:flex;gap:8px;align-items:center;margin-bottom:4px;">
+                  <div class="post-avatar" style="width:24px;height:24px;font-size:0.7rem;">B</div>
+                  <strong style="font-size:0.8rem;">Beatriz S.</strong>
+                  <span style="font-size:0.72rem;color:var(--texto-suave);">Há 40min</span>
+                </div>
+                <p style="font-size:0.82rem;color:var(--texto-suave);margin:0;padding-left:32px;">
+                  Estou na mesma! O que me ajudou foi dividir o dia em blocos de 25min. Você consegue 💪
+                </p>
+              </div>
+            </div>
+
+            <!-- POST 2 -->
+            <div class="forum-post post-item" data-category="rotina" data-search="beatriz psicologia pomodoro estudo rotina">
+              <div class="post-header">
+                <div class="post-avatar" style="background:linear-gradient(135deg, var(--menta), var(--lavanda-medio));">B</div>
+                <div class="post-meta">
+                  <div class="post-author">
+                    Beatriz S. (Psicologia)
+                    <span class="post-tag" style="background:var(--lavanda);font-size:0.65rem;padding:2px 8px;margin-left:4px;">🎖️ Veterana</span>
+                  </div>
+                  <div class="post-date">Há 3 horas · 🟢 online</div>
+                </div>
+              </div>
+              <p class="post-body"><strong>Dica de estudo que mudou minha vida!</strong><br><br>
+                Comecei a usar a Técnica Pomodoro de 25 min e colocar o celular em outro quarto. O rendimento triplicou! No intervalo, faço um alongamento rápido ou tomo água. Recomendo muito pra quem se distrai fácil como eu. 💡</p>
+              <div class="post-tags">
+                <span class="post-tag">📅 Rotina</span>
+                <span class="post-tag">⏱️ Pomodoro</span>
+                <span class="post-tag">💡 Dica</span>
+              </div>
+              <div class="post-actions">
+                <button class="post-action-btn reaction-btn" title="Enviar força">
+                  <span class="reaction-icon">💪</span> <span class="reaction-count">42</span> Força
+                </button>
+                <button class="post-action-btn reaction-btn" title="Enviar abraço">
+                  <span class="reaction-icon">🫂</span> <span class="reaction-count">10</span> Abraço
+                </button>
+                <button class="post-action-btn reaction-btn" title="Enviar incentivo">
+                  <span class="reaction-icon">🚀</span> <span class="reaction-count">20</span> Você consegue!
+                </button>
+                <button class="post-action-btn" title="Ver comentários">
+                  <span>💬</span> <span>8</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- POST 3 -->
+            <div class="forum-post post-item" data-category="mental" data-search="marcos psicólogo crp ansiedade provas">
+              <div class="post-header">
+                <div class="post-avatar" style="background:linear-gradient(135deg, var(--coral), var(--lavanda-medio));">MA</div>
+                <div class="post-meta">
+                  <div class="post-author">
+                    Dr. Marcos Alves 
+                    <span class="verified-badge">✓ Psicólogo CRP</span>
+                  </div>
+                  <div class="post-date">Há 5 horas</div>
+                </div>
+              </div>
+              <p class="post-body"><strong>Re: Semana de provas tá pesada...</strong><br><br>
+                Lucas, sua atitude de parar para respirar e organizar prioridades já é um passo enorme. A ansiedade é natural. Uma dica: divida as entregas em tarefas menores (ex: "escrever introdução", "revisar referências"). Isso tira o peso do "tudo de uma vez". Estamos juntos nessa!</p>
+              <div class="post-tags">
+                <span class="post-tag">🧠 Saúde Mental</span>
+                <span class="post-tag">✓ Verificado</span>
+              </div>
+              <div class="post-actions">
+                <button class="post-action-btn reaction-btn" title="Enviar força">
+                  <span class="reaction-icon">💪</span> <span class="reaction-count">58</span> Força
+                </button>
+                <button class="post-action-btn reaction-btn" title="Enviar abraço">
+                  <span class="reaction-icon">🫂</span> <span class="reaction-count">30</span> Abraço
+                </button>
+                <button class="post-action-btn reaction-btn" title="Enviar incentivo">
+                  <span class="reaction-icon">🚀</span> <span class="reaction-count">12</span> Você consegue!
+                </button>
+                <button class="post-action-btn" title="Ver comentários">
+                  <span>💬</span> <span>5</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- EMPTY STATE -->
+            <div id="emptyState" style="display:none;background:var(--branco);border:1px dashed var(--borda);border-radius:16px;padding:48px 24px;text-align:center;">
+              <div style="font-size:3rem;margin-bottom:12px;">🔍</div>
+              <h3 style="font-family:'Nunito',sans-serif;font-weight:800;margin-bottom:6px;">Nenhum post encontrado</h3>
+              <p style="font-size:0.88rem;color:var(--texto-suave);">Tente buscar por outro termo ou mudar o filtro.</p>
+            </div>
+
+          </div>
+
+          <!-- COLUNA DIREITA: SIDEBAR -->
+          <aside style="display:flex;flex-direction:column;gap:16px;">
+
+            <!-- TÓPICOS EM ALTA -->
+            <div style="background:var(--branco);border:1px solid var(--borda);border-radius:16px;padding:20px;box-shadow:0 2px 10px var(--sombra);">
+              <h4 style="font-family:'Nunito',sans-serif;font-weight:800;font-size:0.95rem;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+                🔥 Tópicos em alta
+              </h4>
+              <div style="display:flex;flex-direction:column;gap:10px;">
+                <a href="#" style="text-decoration:none;color:inherit;display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:10px;transition:background 0.2s;" onmouseover="this.style.background='var(--lavanda-claro)'" onmouseout="this.style.background='transparent'">
+                  <span style="font-size:0.85rem;"><strong>#</strong> SemanaDeProvas</span>
+                  <span style="font-size:0.72rem;color:var(--texto-suave);">42 posts</span>
+                </a>
+                <a href="#" style="text-decoration:none;color:inherit;display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:10px;transition:background 0.2s;" onmouseover="this.style.background='var(--lavanda-claro)'" onmouseout="this.style.background='transparent'">
+                  <span style="font-size:0.85rem;"><strong>#</strong> DicasDeEstudo</span>
+                  <span style="font-size:0.72rem;color:var(--texto-suave);">35 posts</span>
+                </a>
+                <a href="#" style="text-decoration:none;color:inherit;display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:10px;transition:background 0.2s;" onmouseover="this.style.background='var(--lavanda-claro)'" onmouseout="this.style.background='transparent'">
+                  <span style="font-size:0.85rem;"><strong>#</strong> SonoEMemória</span>
+                  <span style="font-size:0.72rem;color:var(--texto-suave);">28 posts</span>
+                </a>
+                <a href="#" style="text-decoration:none;color:inherit;display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:10px;transition:background 0.2s;" onmouseover="this.style.background='var(--lavanda-claro)'" onmouseout="this.style.background='transparent'">
+                  <span style="font-size:0.85rem;"><strong>#</strong> Ansiedade</span>
+                  <span style="font-size:0.72rem;color:var(--texto-suave);">21 posts</span>
+                </a>
+                <a href="#" style="text-decoration:none;color:inherit;display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border-radius:10px;transition:background 0.2s;" onmouseover="this.style.background='var(--lavanda-claro)'" onmouseout="this.style.background='transparent'">
+                  <span style="font-size:0.85rem;"><strong>#</strong> VitóriasDaSemana</span>
+                  <span style="font-size:0.72rem;color:var(--texto-suave);">18 posts</span>
+                </a>
+              </div>
+            </div>
+
+            <!-- REGRAS DA COMUNIDADE -->
+            <div style="background:linear-gradient(135deg, var(--menta-suave), var(--lavanda-claro));border:1px solid var(--borda);border-radius:16px;padding:20px;">
+              <h4 style="font-family:'Nunito',sans-serif;font-weight:800;font-size:0.95rem;margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+                📜 Regras da Comunidade
+              </h4>
+              <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:10px;font-size:0.82rem;color:var(--texto-suave);">
+                <li style="display:flex;gap:8px;"><span>💚</span><span><strong>Respeito sempre.</strong> Sem julgamentos, sem discurso de ódio.</span></li>
+                <li style="display:flex;gap:8px;"><span>🤝</span><span><strong>Apoio mútuo.</strong> Estamos aqui para somar, não competir.</span></li>
+                <li style="display:flex;gap:8px;"><span>🔒</span><span><strong>Privacidade.</strong> O que é compartilhado aqui, fica aqui.</span></li>
+                <li style="display:flex;gap:8px;"><span>🩺</span><span><strong>Não substitui ajuda profissional.</strong> Em crise, ligue CVV 188.</span></li>
+              </ul>
+            </div>
+
+            <!-- CTA PARA A HEART.IA -->
+            <div style="background:linear-gradient(135deg, var(--coral), var(--coral-escuro));border-radius:16px;padding:20px;color:#FFF;text-align:center;">
+              <div style="font-size:2rem;margin-bottom:8px;">💚</div>
+              <h4 style="font-family:'Nunito',sans-serif;font-weight:900;font-size:1rem;margin-bottom:6px;">Precisa conversar?</h4>
+              <p style="font-size:0.82rem;opacity:0.9;margin-bottom:14px;">A heart.ia está disponível 24h para te ouvir.</p>
+              <a href="ia.html" class="btn btn-sm" style="background:#FFF;color:var(--coral-escuro);text-decoration:none;font-weight:800;">Conversar agora →</a>
+            </div>
+
+          </aside>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <!-- MODAL DE NOVO POST -->
+  <div class="modal-overlay" id="newPostModal">
+    <div class="modal">
+      <button class="modal-close" id="closeModal">✕</button>
+      <h3>💬 Compartilhar com a comunidade</h3>
+      <p>Compartilhe uma dúvida, uma conquista ou um desabafo. Sua mensagem será revisada antes de ser publicada para manter o espaço seguro.</p>
+      <input type="text" id="postTitle" placeholder="Título do seu post..." style="width:100%;margin-bottom:12px;font-size:0.9rem;padding:12px;border:1px solid var(--borda);border-radius:10px;background:var(--lavanda-claro);color:var(--texto);font-family:'Inter',sans-serif;">
+      <textarea id="postBody" rows="4" placeholder="O que você quer compartilhar?" style="width:100%;font-family:inherit;font-size:0.88rem;border:1px solid var(--borda);border-radius:12px;padding:12px;resize:none;background:var(--lavanda-claro);color:var(--texto);"></textarea>
+      <select id="postCategory" style="width:100%;margin-top:10px;font-size:0.88rem;padding:12px;border:1px solid var(--borda);border-radius:10px;background:var(--lavanda-claro);color:var(--texto);font-family:'Inter',sans-serif;">
+        <option value="">Selecione o tema...</option>
+        <option value="mental">🧠 Saúde Mental</option>
+        <option value="fisica">💪 Saúde Física</option>
+        <option value="nutri">🥗 Nutrição</option>
+        <option value="sono">😴 Sono</option>
+        <option value="rotina">📅 Rotina</option>
+      </select>
+      <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn" id="submitPost">Enviar post</button>
+        <button class="btn btn-outline" id="cancelPost">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <h3 class="brand-title">P.U.L.S.E<span>.</span></h3>
+        <p class="copyright-text">&copy; 2026 Todos os direitos reservados.</p>
+      </div>
+      <div class="footer-middle">
+        <div class="info-block"><h4>Dias Úteis</h4><p class="info-content">📅 Segunda a Sexta: 09h às 18h</p></div>
+        <div class="info-block"><h4>Finais de Semana</h4><p class="info-content">🕐 Sábado: 09h às 13h</p></div>
+        <div class="info-block"><h4>Canais de Suporte</h4><p class="info-content">✉️ <a href="mailto:pulsestudantil@gmail.com" class="link-email">pulsestudantil@gmail.com</a></p></div>
+      </div>
+      <div class="footer-bottom">
+        <div class="disclaimer-title"><strong>ℹ️ Aviso de Projeto Acadêmico</strong></div>
+        <p class="disclaimer-text">Este ambiente digital é um protótipo construído para fins de avaliação acadêmica. Os textos e recomendações de bem-estar servem apenas como massa de dados para testes de usabilidade e interface, não devendo ser utilizados como guia de saúde real. Para orientações médicas, consulte um profissional habilitado.</p>
+        <div class="disclaimer-ai">
+          <strong>🤖 Sobre a heart.ia</strong>
+          <p>A assistente virtual heart.ia é uma ferramenta de apoio informativo e <strong>não substitui, em nenhuma hipótese, o atendimento de profissionais de saúde habilitados</strong>. O uso das informações é de <strong>responsabilidade exclusiva do usuário</strong>. Em caso de crise, ligue <strong>CVV: 188</strong>.</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+  <script src="../script.js"></script>
+
+  <!-- ═══════════════ SCRIPTS ESPECÍFICOS DESTA PÁGINA ═══════════════ -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      /* ── 1. Layout responsivo do grid (sidebar só em telas grandes) ── */
+      const layout = document.getElementById('comunidadeLayout');
+      function ajustarLayout() {
+        if (!layout) return;
+        layout.style.gridTemplateColumns = window.innerWidth >= 900 ? '1fr 280px' : '1fr';
+      }
+      ajustarLayout();
+      window.addEventListener('resize', ajustarLayout);
+
+      /* ── 2. Modal de novo post ── */
+      const modal = document.getElementById('newPostModal');
+      const openBtn = document.getElementById('openNewPost');
+      const closeBtn = document.getElementById('closeModal');
+      const cancelBtn = document.getElementById('cancelPost');
+      const submitBtn = document.getElementById('submitPost');
+
+      if (openBtn && modal) openBtn.addEventListener('click', () => modal.classList.add('open'));
+      const fecharModal = () => modal?.classList.remove('open');
+      if (closeBtn) closeBtn.addEventListener('click', fecharModal);
+      if (cancelBtn) cancelBtn.addEventListener('click', fecharModal);
+
+      if (submitBtn) {
+        submitBtn.addEventListener('click', () => {
+          const titulo = document.getElementById('postTitle').value.trim();
+          const categoria = document.getElementById('postCategory').value;
+          if (!titulo || !categoria) {
+            showToast('⚠️ Preencha o título e o tema do seu post!');
+            return;
+          }
+          showToast('✅ Post enviado para revisão! Em breve estará no mural.');
+          fecharModal();
+          document.getElementById('postTitle').value = '';
+          document.getElementById('postBody').value = '';
+          document.getElementById('postCategory').value = '';
+        });
+      }
+
+      /* ── 3. Busca + Filtros ── */
+      const busca = document.getElementById('buscaPost');
+      const filtros = document.querySelectorAll('.nutri-tab[data-filter]');
+      const posts = document.querySelectorAll('.post-item');
+      const emptyState = document.getElementById('emptyState');
+      let filtroAtivo = 'all';
+
+      function filtrarPosts() {
+        const termo = (busca?.value || '').toLowerCase().trim();
+        let visiveis = 0;
+
+        posts.forEach(post => {
+          const categoria = post.dataset.category || '';
+          const conteudo = (post.dataset.search || '') + ' ' + post.textContent.toLowerCase();
+          const matchFiltro = filtroAtivo === 'all' || categoria === filtroAtivo;
+          const matchBusca = !termo || conteudo.includes(termo);
+          const visivel = matchFiltro && matchBusca;
+          post.style.display = visivel ? '' : 'none';
+          if (visivel) visiveis++;
+        });
+
+        if (emptyState) emptyState.style.display = visiveis === 0 ? 'block' : 'none';
+      }
+
+      filtros.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filtros.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          filtroAtivo = btn.dataset.filter;
+          filtrarPosts();
+        });
+      });
+
+      if (busca) busca.addEventListener('input', filtrarPosts);
+    });
+  </script>
+</body>
+</html>
