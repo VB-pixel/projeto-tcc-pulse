@@ -21,7 +21,11 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // Configuração de CORS mais segura
-app.use(cors({ origin: 'http://127.0.0.1:5500' })); // Coloque a URL do seu front-end (Live Server)
+app.use(cors({
+  origin: ['http://localhost:5500', 'http://127.0.0.1:5500'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+})); // Coloque a URL do seu front-end (Live Server)
 app.use(express.json());
 
 // ─── Middlewares ───
